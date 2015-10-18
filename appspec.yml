@@ -2,18 +2,24 @@ version: 0.0
 os: linux
 
 files:
-  - source: files/newpage.html
+  - source: files/index.html
     destination: /var/www/html
 
 permissions:
   - object: /var/www/html
-    pattern: newpage.html
-    mode: 755
+    pattern: index.html
+    owner: apache
+    group: apache
+    mode: 644
     type:
       - file
 
 hooks:
   BeforeInstall:
+    - location: scripts/deregister_from_elb.sh
     - location: scripts/webserver-stop.sh
+    - location: scripts/delete-old-index.sh
   AfterInstall:
+    - location: scripts/sleep.sh
     - location: scripts/webserver-start.sh
+    - location: scripts/register_with_elb.sh
