@@ -12,10 +12,14 @@ os: linux (or "windows")
 
 *** FILE SECTION OPTIONAL
 
+
 files:
 *** LINUX SOURCE
+
   - source:  myfolder/myfile
     destination: /myfolder/destinationfolder/
+    
+
 *** WINDOWS SOURCE 
   - source: myfolder/myfile
     destination: C:\myfolder\destination\
@@ -23,16 +27,23 @@ files:
 *** PERMISSIONS SECTION OPTIONAL
 
 permissions:
+
+
 *** OBJECT IS ONLY REQUIRED PROPERTY
 
+
 *** SPECIFIES PARENT FOLDER DIRECTORY THAT YOU WANT TO TAKE ACTION ON
+
   - object: /myfolder
 
 *** PATTERN IS OPTIONAL, REGULAR EXPRESSION TO FIND ONE OR MORE FILES YOU WANT TO MAKE A PERMISSION CHANGE ON.  ONE BELOW UPDATES ALL JAR FILES
+
     pattern: *.jar
 
 *** EXCEPT IS THE OPPOSITE OF PATTERN.  UPDATE PERMISSIONS ON ALL FILES "EXCEPT" THE REG EX SPECIFIED, ONE BELOW UPDATES ALL JAR FILES EXCEPT ONES THAT END IN "-test"
+
     except: *-test.jar
+    
 ***  UPDATES/SPECIFIES OR CHANGES OWNER, SAME SORT OF OWNER GROUP WHEN DOING A CHMOD COMMAND
     owner: ec2-user
 *** UPDATES/SPECIFIES OR CHANGES GROUP
@@ -80,10 +91,15 @@ End is where the code deploy agent sends a success signal to the code deploy end
 *** ADVICE IS TO START WITH "BeforeInstall" rather than "ApplicationStop", as it always looks in the current codedeploy revision, rather than applicationstop, which looks in the last code deploy revision.
 
 hooks:
+
   BeforeInstall:
     - location: scripts/httpd-stop.sh (FOR EXAMPLE ONE THAT TURNS OFF APACHE OR IAS)
-      timeout: 300  (***TIMEOUT IN SECONDS, IF NOT SPECIFIED, BY DEFAULT, ITS 3600 SECONDS, WHICH IS ALSO THE MAXIMUM AMOUNT OF TIME YOU CAN GIVE, AND IT REPRESENTS THE WHOLE BEFOREINSTALL EVENT, NOT THE SCRIPT ITSELF)
-      runas: root (***ONLY APPLICABLE IN LINUX)
+      timeout: 300  
+      
+      (***TIMEOUT IN SECONDS, IF NOT SPECIFIED, BY DEFAULT, ITS 3600 SECONDS, WHICH IS ALSO THE MAXIMUM AMOUNT OF TIME YOU CAN GIVE, AND IT REPRESENTS THE WHOLE BEFOREINSTALL EVENT, NOT THE SCRIPT ITSELF)
+      runas: root 
+      
+      (***ONLY APPLICABLE IN LINUX)
 *** THE INSTALL IS AUTOMATICALLY RAN BETWEEN BEFORE INSTALL AND AFTER INSTALL AND WILL COPY ANY SPECIFIED FILES..
   AfterInstall:
     - location scripts/webserver-start.sh
